@@ -182,13 +182,17 @@ Time: ${new Date().toLocaleString()}
     
     // Send email notification
     try {
-      await resend.emails.send({
-        from: 'Portfolio Contact <onboarding@resend.dev>',
-        to: [process.env.ADMIN_EMAIL!],
-        replyTo: validated.email,
-        subject: `New Portfolio Inquiry from ${validated.name}`,
-        text: emailContent,
-      });
+      if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 'dummy-key') {
+        await resend.emails.send({
+          from: 'Portfolio Contact <onboarding@resend.dev>',
+          to: [process.env.ADMIN_EMAIL || 'admin@example.com'],
+          replyTo: validated.email,
+          subject: `New Portfolio Inquiry from ${validated.name}`,
+          text: emailContent,
+        });
+      } else {
+        console.log('Email not configured, skipping email send');
+      }
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
       // Don't fail the request if email fails, inquiry is still saved

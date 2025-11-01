@@ -38,6 +38,10 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
 // Helper function to check if MongoDB is available
 export async function isMongoAvailable(): Promise<boolean> {
   try {
+    // Skip MongoDB connection if no URI provided
+    if (!process.env.MONGODB_URI || process.env.MONGODB_URI === 'mongodb://localhost:27017/portfolio') {
+      return false;
+    }
     await connectToDatabase();
     return true;
   } catch {
