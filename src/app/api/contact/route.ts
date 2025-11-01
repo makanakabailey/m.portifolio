@@ -6,7 +6,7 @@ import { rateLimit, getClientIP } from '@/lib/rate-limit';
 import { mockDb } from '@/lib/mock-db';
 import { z } from 'zod';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 'dummy-key');
 
 const contactSchema = z.object({
   name: z.string()
