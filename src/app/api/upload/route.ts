@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+// import { put } from '@vercel/blob'; // Temporarily disabled
 import { requireAdmin } from '@/lib/auth';
 import { sanitizeFilename } from '@/lib/validation';
 
@@ -48,19 +48,17 @@ export async function POST(request: Request) {
     const timestamp = Date.now();
     const finalFilename = `${timestamp}-${sanitizedFilename}`;
     
-    // Upload to Vercel Blob
-    const blob = await put(finalFilename, file, {
-      access: 'public',
-      addRandomSuffix: true, // Prevents filename conflicts
-    });
+    // Upload to Vercel Blob - Temporarily disabled
+    // TODO: Configure Vercel Blob storage and add BLOB_READ_WRITE_TOKEN
     
     return Response.json({ 
-      success: true,
-      url: blob.url,
+      success: false,
+      error: 'File upload not configured yet',
+      message: 'Please configure Vercel Blob storage and add BLOB_READ_WRITE_TOKEN environment variable',
       filename: finalFilename,
       size: file.size,
       type: file.type
-    });
+    }, { status: 501 });
     
   } catch (error: any) {
     console.error('Upload error:', error);
