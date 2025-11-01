@@ -1,26 +1,111 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Pure high-contrast color system */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 65 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
+
+    --radius: 2.5rem;
+
+    /* Gradient accents */
+    --gradient-yellow: linear-gradient(135deg, hsl(45 100% 55%), hsl(35 100% 50%));
+    --gradient-orange: linear-gradient(135deg, hsl(25 100% 60%), hsl(15 100% 50%));
+    
+    /* Shadows */
+    --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.08);
+    --shadow-hover: 0 8px 32px -4px hsl(0 0% 0% / 0.12);
+
+    /* Typography scale */
+    --text-hero: 7.5rem;
+    --text-heading: 4rem;
+    --text-subheading: 2rem;
+    --text-body: 1.125rem;
+    --text-small: 0.875rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 900;
+    letter-spacing: -0.025em;
+  }
+}
+
+@layer utilities {
+  .text-hero {
+    font-size: clamp(3rem, 10vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .text-display {
+    font-size: clamp(2rem, 6vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .pill {
+    border-radius: 9999px;
+  }
+
+  .card-rounded {
+    border-radius: 2.5rem;
+  }
+
+  .hover-lift {
+    transition: all 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px -4px hsl(0 0% 0% / 0.12);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }
