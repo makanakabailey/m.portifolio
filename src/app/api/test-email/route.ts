@@ -1,10 +1,19 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 'dummy-key');
 
 export async function GET() {
   try {
     console.log('Testing Resend email integration...');
+    
+    // Check if API key is configured
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy-key') {
+      return Response.json({ 
+        success: false,
+        message: 'Email not configured - RESEND_API_KEY not set',
+        configured: false
+      }, { status: 501 });
+    }
     
     const { data, error } = await resend.emails.send({
       from: 'Portfolio Test <onboarding@resend.dev>',
