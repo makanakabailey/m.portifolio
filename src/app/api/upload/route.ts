@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+// import { put } from '@vercel/blob'; // Will enable after deployment
 import { requireAdmin } from '@/lib/auth';
 import { sanitizeFilename } from '@/lib/validation';
 
@@ -48,19 +48,14 @@ export async function POST(request: Request) {
     const timestamp = Date.now();
     const finalFilename = `${timestamp}-${sanitizedFilename}`;
     
-    // Upload to Vercel Blob
-    const blob = await put(finalFilename, file, {
-      access: 'public',
-      addRandomSuffix: true, // Prevents filename conflicts
-    });
-    
+    // File upload will be enabled after deployment
     return Response.json({ 
-      success: true,
-      url: blob.url,
+      success: false,
+      message: 'File upload will be configured after initial deployment',
       filename: finalFilename,
       size: file.size,
       type: file.type
-    });
+    }, { status: 501 });
     
   } catch (error: any) {
     console.error('Upload error:', error);
